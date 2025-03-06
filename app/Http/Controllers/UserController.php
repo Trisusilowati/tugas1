@@ -11,6 +11,6 @@ class UserController extends Controller
     $users = DB::table('users')->get();
 
     // dd($users);
-    return view('user.index', compact('users'));
+    return view('backend.user.index', compact('users'));
    }
 }
