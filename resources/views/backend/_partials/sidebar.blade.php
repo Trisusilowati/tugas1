@@ -28,18 +28,27 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-            <li class="nav-item">
+            <li class="nav-item {{ Request::is('dashboard* ') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-              <li class="nav-item">
+                <li class="nav-item {{ Request::is('user* ') ? 'active' : '' }}">
                 <a href="{{ route('user')}}">
                   <i class="fas fa-users"></i>
                   <p>Data user</p>
                 </a>
               </li>
+              <li class="nav-item">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <p>Log Out</p>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                    </form>  
+                </li>
               <li class="nav-item active">
               </li>
             </ul>
