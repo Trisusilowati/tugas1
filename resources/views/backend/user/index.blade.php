@@ -39,6 +39,13 @@
             </div>
         </div>
         <div class="card-body">
+            <!-- Form Search -->
+            <form method="GET" action="{{ route('user.index') }}" class="mb-3">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Cari Nama User" value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-primary">Cari</button>
+                </div>
+            </form>
             <table class="table table-head-bg-info table-hover">
                 <thead>
                     <tr>
@@ -50,30 +57,61 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                    <tr>
-                        <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>
-                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <!-- Form delete dengan id unik -->
-                            <form id="delete-form-{{ $user->id }}" action="{{ route('user.delete', $user->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <!-- Tombol dengan tipe button agar tidak langsung submit -->
-                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $user->id }})">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>
+                                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form id="delete-form-{{ $user->id }}" action="{{ route('user.delete', $user->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $user->id }})">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
+            @if ($users->hasPages())
+    <nav>
+        <ul class="pagination justify-content-center">
+            {{-- Tombol Previous --}}
+            @if ($users->onFirstPage())
+                <li class="page-item disabled">
+                    <span class="page-link">Sebelumnya</span>
+                </li>
+            @else
+                <li class="page-item">
+                    <a class="page-link" href="{{ $users->previousPageUrl() }}" rel="prev">Sebelumnya</a>
+                </li>
+            @endif
+
+            {{-- Nomor Halaman --}}
+            @for ($i = 1; $i <= $users->lastPage(); $i++)
+                <li class="page-item {{ ($users->currentPage() == $i) ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $users->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+
+            {{-- Tombol Next --}}
+            @if ($users->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $users->nextPageUrl() }}" rel="next">Berikutnya</a>
+                </li>
+            @else
+                <li class="page-item disabled">
+                    <span class="page-link">Berikutnya</span>
+                </li>
+            @endif
+        </ul>
+    </nav>
+@endif 
         </div>
     </div>
 </div>
 
 @section('script')
-    <!-- Pastikan SweetAlert2 CDN sudah disisipkan di layout utama -->
     <script>
         function confirmDelete(userId) {
             Swal.fire({

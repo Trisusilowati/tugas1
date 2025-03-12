@@ -30,22 +30,16 @@
             class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
           >
             <div class="container-fluid">
-              <nav
-                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-              >
+            <form action="{{ route('search') }}" method="GET" class="navbar-left navbar-form nav-search p-0 d-none d-lg-flex">
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <button type="submit" class="btn btn-search pe-1">
-                      <i class="fa fa-search search-icon"></i>
-                    </button>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Search ..."
-                    class="form-control"
-                  />
+                    <div class="input-group-prepend">
+                        <button type="submit" class="btn btn-search pe-1">
+                            <i class="fa fa-search search-icon"></i>
+                        </button>
+                    </div>
+                    <input type="text" name="query" placeholder="Search ..." class="form-control" required />
                 </div>
-              </nav>
+            </form>
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                 <li
@@ -337,7 +331,7 @@
                     </div>
                     <span class="profile-username">
                       <span class="op-7">Hi,</span>
-                      <span class="fw-bold">Tri</span>
+                      <span class="fw-bold">Three</span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -352,8 +346,8 @@
                             />
                           </div>
                           <div class="u-text">
-                            <h4>Hizrian</h4>
-                            <p class="text-muted">hello@example.com</p>
+                            <h4>Tri Susilowati</h4>
+                            <p class="text-muted">tri@gmail.com</p>
                             <a
                               href="profile.html"
                               class="btn btn-xs btn-secondary btn-sm"
@@ -378,4 +372,4 @@
               </ul>
             </div>
           </nav>
-         
+          <!-- End Navbar -->

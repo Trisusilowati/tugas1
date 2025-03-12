@@ -13,6 +13,7 @@ class UserController extends Controller
     $users = DB::table('users')->get();
 
     // dd($users);
+    $users = User::paginate(3); // Menampilkan 10 data per halaman
     return view('backend.user.index', compact('users'));
    }
 

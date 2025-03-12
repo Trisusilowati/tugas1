@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone');
             $table->integer('class');
-            $table->string('image');
             $table->string('addres');
             $table->enum('gender', ['male','female']);
             $table->enum('status', ['active', 'inactive']);
