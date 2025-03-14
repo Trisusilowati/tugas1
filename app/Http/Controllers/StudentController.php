@@ -4,36 +4,38 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Http\Requests\StoreStudentRequest;
 use Illuminate\Support\Facades\Storage;
 use DB;
 
 
 class StudentController extends Controller
 {
-    public function index()
-    {
-        $students = DB::table('students')->select('*')->paginate(3);
-        return view('backend.student.index', compact('students'));
-    }
+    public function index(Request $request)
+   {
+    $search = $request->input('search');
+
+    $students = student::query()
+        ->when($search, function ($query) use ($search) {
+            return $query->where('name', 'like', '%'.$search.'%')
+                         ->orWhere('email', 'like', '%'.$search.'%')
+                         ->orWhere('addres', 'like', '%'.$search.'%');
+        })
+        ->orderBy('id', 'desc')
+        ->paginate(3)
+        ->appends(['search' => $search]); // Memastikan pencarian tetap ada di pagination
+
+    return view('backend.student.index', compact('students', 'search'));
+   }
 
     public function create()
     {
         return view('backend.student.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'class' => 'required',
-            'addres' => 'required',
-            'gender' => 'required|in:male,female',
-            'status' => 'required|in:active,inactive',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
+        
         // Cek apakah photo diunggah atau tidak
         if ($request->hasFile('photo')) {
             // Simpan foto dengan custom nama (menggunakan timestamp + nama asli tanpa spasi)
@@ -72,18 +74,9 @@ class StudentController extends Controller
         return view('backend.student.edit', compact('student'));
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreStudentRequest $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'class' => 'required',
-            'addres' => 'required',
-            'gender' => 'required|in:male,female',
-            'status' => 'required|in:active,inactive',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        
 
         // Ambil data lama dari database
         $student = DB::table('students')->where('id', $id)->first();

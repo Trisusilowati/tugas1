@@ -1,4 +1,4 @@
-<div class="main-panel">
+
         <div class="main-header">
           <div class="main-header-logo">
             <!-- Logo Header -->
@@ -372,4 +372,5 @@
               </ul>
             </div>
           </nav>
+          </div>
           <!-- End Navbar -->

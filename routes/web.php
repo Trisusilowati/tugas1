@@ -7,7 +7,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\MapelController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,6 +17,17 @@ Route::middleware('auth', 'verified')->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index']) ->name('dashboard');
 
     Route::get('search', [SearchController::class, 'index'])->name('search');
+
+    Route::prefix('mapel')->group(function(){
+        Route::get('/', [MapelController::class, 'index'])->name('mapel');
+        Route::get('/create', [MapelController::class, 'create'])->name('mapel.create');
+        Route::get('/mapel', [MapelController::class, 'index'])->name('mapel.index');
+        Route::post('/store', [MapelController::class, 'store'])->name('mapel.store');
+        Route::get  ('/mapel/{id}/edit', [MapelController::class, 'edit'])->name('mapel.edit');
+        Route::delete ('/mapel/{id}', [MapelController::class, 'delete'])->name('mapel.delete');
+        Route::put  ('/mapel/{id}', [MapelController::class, 'update'])->name('mapel.update');
+        
+    });
 
     Route::prefix('teacher')->group(function () {
         Route::get('/', [TeacherController::class, 'index'])->name('teacher');

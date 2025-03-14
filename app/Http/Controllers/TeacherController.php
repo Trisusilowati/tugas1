@@ -8,12 +8,23 @@ use DB;
 
 class TeacherController extends Controller
 {
-    public function index()
-    {
-        
-        $teachers = DB::table('teacher')->paginate(3);
-        return view('backend.teacher.index', compact('teachers'));
-    }
+    public function index(Request $request)
+   {
+    $search = $request->input('search');
+
+    $teachers = teacher::query()
+        ->when($search, function ($query) use ($search) {
+            return $query->where('name', 'like', '%'.$search.'%')
+                         ->orWhere('email', 'like', '%'.$search.'%')
+                         ->orWhere('jabatan', 'like', '%'.$search.'%')
+                         ->orWhere('addres', 'like', '%'.$search.'%');
+        })
+        ->orderBy('id', 'desc')
+        ->paginate(3)
+        ->appends(['search' => $search]); // Memastikan pencarian tetap ada di pagination
+
+    return view('backend.teacher.index', compact('teachers', 'search'));
+   }
 
     public function create()
     {
@@ -69,7 +80,7 @@ class TeacherController extends Controller
     // Validasi input
     $request->validate([
         'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:teachers,email,'.$id,
+        'email' => 'required|email|unique:teacher,email,'.$id,
         'phone' => 'required|string|max:20',
         'jabatan' => 'required|string|max:255',
         'addres' => 'required|string',

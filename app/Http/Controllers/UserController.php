@@ -8,13 +8,20 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-   public function index()
+   public function index(Request $request)
    {
-    $users = DB::table('users')->get();
+    $search = $request->input('search');
 
-    // dd($users);
-    $users = User::paginate(3); // Menampilkan 10 data per halaman
-    return view('backend.user.index', compact('users'));
+    $users = User::query()
+        ->when($search, function ($query) use ($search) {
+            return $query->where('name', 'like', '%'.$search.'%')
+                         ->orWhere('email', 'like', '%'.$search.'%');
+        })
+        ->orderBy('id', 'desc')
+        ->paginate(3)
+        ->appends(['search' => $search]); // Memastikan pencarian tetap ada di pagination
+
+    return view('backend.user.index', compact('users', 'search'));
    }
 
    public function create()
