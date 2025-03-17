@@ -54,6 +54,11 @@
                   <i class="fas fa-users"></i>
                   <p>Mata Pelajaran</p>
                 </a>
+                <li class="nav-item {{ Request::is('nilai* ') ? 'active' : '' }}">
+                <a href="{{ route('nilai')}}">
+                  <i class="fas fa-users"></i>
+                  <p>Nilai</p>
+                </a>
               </li>
               <li class="nav-item">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
