@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Nilai;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Mapel;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Nilai;
+
+
+
+
 
 class NilaiController extends Controller
 {
@@ -72,7 +77,7 @@ class NilaiController extends Controller
         return redirect()->route('nilai')->with('success', 'Nilai berhasil ditambahkan.');
     }
 
- 
+
 
     public function edit($id)
     {
@@ -114,5 +119,12 @@ class NilaiController extends Controller
         $nilai->delete();
 
         return redirect()->route('nilai')->with('success', 'Nilai berhasil dihapus.');
+    }
+    public function exportPdf()
+    {
+        $nilai = Nilai::with(['student', 'teacher', 'mapel'])->get();
+        $pdf = PDF::loadView('backend.nilai.pdf', compact('nilai'))->setPaper('a4', 'landscape');
+
+        return $pdf->download('nilai.pdf');
     }
 }

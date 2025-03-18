@@ -26,8 +26,10 @@ Route::middleware('auth', 'verified')->group(function() {
         Route::get('/nilai/{id}/edit', [NilaiController::class, 'edit'])->name('nilai.edit');
         Route::delete('/nilai/{id}', [NilaiController::class, 'destroy'])->name('nilai.destroy');
         Route::put('/nilai/{id}', [NilaiController::class, 'update'])->name('nilai.update');
+        Route::get('/nilai/export-pdf', [NilaiController::class, 'exportPdf'])->name('nilai.export.pdf');
 
     });
+
 
     Route::prefix('mapel')->group(function(){
         Route::get('/', [MapelController::class, 'index'])->name('mapel');

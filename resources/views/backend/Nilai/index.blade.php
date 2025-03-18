@@ -6,6 +6,9 @@
         <a href="{{ route('nilai.create') }}" class="btn btn-dark btn-sm mb-3 ms-4">
             <i class="fas fa-plus"></i> Tambah Nilai
         </a>
+        <a href="{{ route('nilai.export.pdf') }}" class="btn btn-danger btn-sm mb-3 ms-2">
+            <i class="fas fa-file-pdf"></i> Export PDF
+        </a>
 
         @if(session('success'))
             <script>
@@ -23,8 +26,7 @@
         <div class="card shadow-sm ms-4 me-4">
             <div class="card-body p-2">
                 <div class="table-responsive">
-                    <table id="nilai"
-                        class="table table-hover table-striped table-bordered table-sm text-center small">
+                    <table id="nilai" class="table table-hover table-striped table-bordered table-sm text-center small">
                         <thead class="table-dark">
                             <tr>
                                 <th style="width: 5%;">No</th>
@@ -42,8 +44,8 @@
             </div>
         </div>
     </div>
-    @endsection
-    
+@endsection
+
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -65,23 +67,5 @@
                 ]
             });
         });
-
-        function confirmDelete(event) {
-            event.preventDefault();
-            let form = event.target;
-            Swal.fire({
-                title: "Apakah Anda yakin?",
-                text: "Nilai akan dihapus secara permanen!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Ya, Hapus!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        }
     </script>
 @endsection
