@@ -59,6 +59,12 @@
                         <p>Nilai</p>
                     </a>
                 </li>
+                <li class="nav-item {{ Request::is('create*') ? 'active' : '' }}">
+                    <a href="{{ route('pendaftaran') }}">
+                        <i class="fas fa-registered"></i>
+                        <p>Pendaftaran</p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt"></i>

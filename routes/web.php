@@ -9,14 +9,20 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\PendaftaranController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+// ==================== Pendaftaran (Bisa Diakses Tanpa Login) ====================
+Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create'); // Form Pendaftaran
+Route::post('/pendaftaran/store', [PendaftaranController::class, 'store'])->name('pendaftaran.store'); // Simpan Pendaftaran
+
+// ==================== Routes yang Memerlukan Login ====================
+
 
 Route::middleware('auth', 'verified')->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index']) ->name('dashboard');
-   
 
 
 
@@ -77,6 +83,14 @@ Route::middleware('auth', 'verified')->group(function() {
 
 
 });
+
+// Pendaftaran (Admin)
+Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran'); // Hanya Admin
+Route::get('/pendaftaran/edit/{id}', [PendaftaranController::class, 'edit'])->name('pendaftaran.edit');
+Route::put('/pendaftaran/update/{id}', [PendaftaranController::class, 'update'])->name('pendaftaran.update');
+Route::delete('/pendaftaran/delete/{id}', [PendaftaranController::class, 'destroy'])->name('pendaftaran.destroy');
+Route::get('/pendaftaran/export/pdf', [PendaftaranController::class, 'exportPDF'])->name('pendaftaran.export.pdf');
+
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
