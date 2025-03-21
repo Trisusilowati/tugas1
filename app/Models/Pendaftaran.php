@@ -24,6 +24,7 @@ class Pendaftaran extends Model
         'nama_ibu', 
         'jurusan_pertama',
         'jurusan_kedua',
-        'jurusan_ketiga'
+        'jurusan_ketiga',
+        'status'
     ];
 }

@@ -90,6 +90,9 @@ Route::get('/pendaftaran/edit/{id}', [PendaftaranController::class, 'edit'])->na
 Route::put('/pendaftaran/update/{id}', [PendaftaranController::class, 'update'])->name('pendaftaran.update');
 Route::delete('/pendaftaran/delete/{id}', [PendaftaranController::class, 'destroy'])->name('pendaftaran.destroy');
 Route::get('/pendaftaran/export/pdf', [PendaftaranController::class, 'exportPDF'])->name('pendaftaran.export.pdf');
+Route::get('/pendaftaran/{id}', [PendaftaranController::class, 'show'])->name('pendaftaran.show');
+Route::post('/pendaftaran/{id}/terima', [PendaftaranController::class, 'terima'])->name('pendaftaran.terima');
+Route::post('/pendaftaran/{id}/tolak', [PendaftaranController::class, 'tolak'])->name('pendaftaran.tolak');
 
 
 

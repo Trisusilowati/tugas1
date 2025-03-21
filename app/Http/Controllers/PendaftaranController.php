@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 
+
 class PendaftaranController extends Controller
 {
 
@@ -72,7 +73,7 @@ class PendaftaranController extends Controller
 
         $pendaftaran->update($validateData);
 
-        return redirect()->route('pendaftaran')->with('success', 'Data pendaftaran berhasil diperbarui!');
+        return redirect()->route('pendaftaran')->with('updated', 'Data berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -80,6 +81,33 @@ class PendaftaranController extends Controller
         $pendaftaran = Pendaftaran::findOrFail($id);
         $pendaftaran->delete();
 
-        return redirect()->route('pendaftaran')->with('success', 'Data pendaftaran berhasil dihapus!');
+        return redirect()->route('pendaftaran')->with('deleted', 'Data berhasil dihapus!');
     }
+    public function show($id)
+{
+    $siswa = Pendaftaran::findOrFail($id); // Menjamin data ditemukan
+    return view('backend.pendaftaran.show', compact('siswa'));
+}
+
+public function terima($id)
+{
+    $siswa = Pendaftaran::findOrFail($id);
+    $siswa->status = 'Diterima'; // Pastikan ada kolom 'status' di database
+    $siswa->save();
+
+    return redirect()->route('pendaftaran')->with('accepted', 'Siswa diterima!');
+}
+
+public function tolak($id)
+{
+    $siswa = Pendaftaran::findOrFail($id);
+    $siswa->status = 'Ditolak'; // Pastikan ada kolom 'status' di database
+    $siswa->save();
+
+    return redirect()->route('pendaftaran')->with('rejected', 'Siswa ditolak!');
+}
+
+
+
+    
 }
