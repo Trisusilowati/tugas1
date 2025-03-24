@@ -26,7 +26,7 @@ Route::middleware('auth', 'verified')->group(function() {
 
 
 
-    Route::get('search', [SearchController::class, 'index'])->name('search');
+    // Route::get('search', [SearchController::class, 'index'])->name('search');
 
     Route::prefix('nilai')->group(function () {
         Route::get('/', [NilaiController::class, 'index'])->name('nilai');
@@ -69,6 +69,7 @@ Route::middleware('auth', 'verified')->group(function() {
         Route::get('/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
         Route::put('/{id}', [StudentController::class, 'update'])->name('students.update');
         Route::delete('/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+        Route::get('/search', [StudentController::class, 'search'])->name('search');
     });
 
     Route::prefix('user')->group(function () {
@@ -89,10 +90,14 @@ Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('penda
 Route::get('/pendaftaran/edit/{id}', [PendaftaranController::class, 'edit'])->name('pendaftaran.edit');
 Route::put('/pendaftaran/update/{id}', [PendaftaranController::class, 'update'])->name('pendaftaran.update');
 Route::delete('/pendaftaran/delete/{id}', [PendaftaranController::class, 'destroy'])->name('pendaftaran.destroy');
-Route::get('/pendaftaran/export/pdf', [PendaftaranController::class, 'exportPDF'])->name('pendaftaran.export.pdf');
+Route::get('/pendaftaran/exportpdf/{id}', [PendaftaranController::class, 'exportPDF'])->name('pendaftaran.export.pdf');
 Route::get('/pendaftaran/{id}', [PendaftaranController::class, 'show'])->name('pendaftaran.show');
 Route::post('/pendaftaran/{id}/terima', [PendaftaranController::class, 'terima'])->name('pendaftaran.terima');
 Route::post('/pendaftaran/{id}/tolak', [PendaftaranController::class, 'tolak'])->name('pendaftaran.tolak');
+
+
+
+
 
 
 

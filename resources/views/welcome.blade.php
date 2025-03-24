@@ -47,8 +47,17 @@
                             Register Student
                         </a>
                 </nav>
+                        <!-- Form Pencarian di Halaman Siswa -->
+<form action="{{ route('search') }}" method="GET" target="_blank" class="mb-6 flex gap-2">
+    <input type="text" name="query" placeholder="Cari Nama atau NISN..." class="btn btn-primary" required>
+    <button type="submit" class="btn btn-primary">Cari</button>
+</form>
+        
+
             @endif
         </header>
+
+
         <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
             <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
                 <div class="text-[13px] leading-[20px] flex-1 p-6 pb-12 lg:p-20 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
@@ -113,11 +122,13 @@
                     <ul class="flex gap-3 text-sm leading-normal">
                         <li>
                             <a href="pendaftaran" target="_blank" class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:bg-black hover:border-black px-5 py-1.5 bg-[#1b1b18] rounded-sm border border-black text-white text-sm leading-normal">
-                                pendaftaran
+                                Deploy Now
                             </a>
                         </li>
                     </ul>
                 </div>
+
+
                 <div class="bg-[#fff2f2] dark:bg-[#1D0002] relative lg:-ml-px -mb-px lg:mb-0 rounded-t-lg lg:rounded-t-none lg:rounded-r-lg aspect-[335/376] lg:aspect-auto w-full lg:w-[438px] shrink-0 overflow-hidden">
                     {{-- Laravel Logo --}}
                     <svg class="w-full text-[#F53003] dark:text-[#F61500] transition-all translate-y-0 opacity-100 max-w-none duration-750 starting:opacity-0 starting:translate-y-6" viewBox="0 0 438 104" fill="none" xmlns="http://www.w3.org/2000/svg">

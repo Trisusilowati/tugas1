@@ -7,6 +7,8 @@ use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use App\Models\Pendaftaran;
+use PDF;
 
 
 class StudentController extends Controller
@@ -141,5 +143,16 @@ class StudentController extends Controller
         return redirect()->route('students')->with('success', 'Data berhasil dihapus.');
     }
 
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+
+    $students = Pendaftaran::where('nama_lengkap', 'LIKE', "%$query%")
+                ->orWhere('nisn', 'LIKE', "%$query%")
+                ->orWhere('status', 'LIKE', "%$query%")
+                ->get();
+
+    return view('backend.pendaftaran.search', compact('students'));
+}
     
 }

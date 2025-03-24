@@ -46,40 +46,13 @@
         </div>
     </div>
     
-    <!-- Button trigger modal -->
     <button type="button" class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#confirmationModal">
         <i class="fas fa-check"></i> Terima / Tolak
     </button>
     
-    <!-- Modal -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">Konfirmasi Pendaftaran</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Apakah Anda ingin menerima atau menolak pendaftaran ini?
-                </div>
-                <div class="modal-footer">
-                    <form action="{{ route('pendaftaran.terima', $siswa->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-check"></i> Terima
-                        </button>
-                    </form>
-                    
-                    <form action="{{ route('pendaftaran.tolak', $siswa->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menolak siswa ini?')">
-                        @csrf
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fas fa-times"></i> Tolak
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <a href="{{ route('pendaftaran.export.pdf', $siswa->id) }}" class="btn btn-primary mt-3">
+        <i class="fas fa-file-pdf"></i> Export PDF
+    </a>
     
     <a href="{{ route('pendaftaran') }}" class="btn btn-secondary mt-3">
         <i class="fas fa-arrow-left"></i> Kembali

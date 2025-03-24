@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
+use App\Models\Student; // Pastikan menggunakan model Student
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class PendaftaranController extends Controller
@@ -106,8 +108,18 @@ public function tolak($id)
 
     return redirect()->route('pendaftaran')->with('rejected', 'Siswa ditolak!');
 }
+public function exportPDF($id)
+    {
+        $pendaftaran = Student::findOrFail($id);
+        $pdf = Pdf::loadView('backend.pendaftaran.download', compact('pendaftaran'));
+
+        return $pdf->download('data_pendaftaran.pdf');
+}
+}
+
+
 
 
 
     
-}
+
