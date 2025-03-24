@@ -5,6 +5,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Mapel;
 use App\Models\Nilai;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -13,14 +14,13 @@ class DashboardController extends Controller
     public function index()
     {
         // Jika database tidak ada, gunakan data statis
-        $dashboards = [
-            ['title' => 'Visitors', 'value' => 1294, 'icon' => 'fas fa-users', 'color' => 'primary'],
-            ['title' => 'Subscribers', 'value' => 1303, 'icon' => 'fas fa-user-check', 'color' => 'info'],
-            ['title' => 'Sales', 'value' => 1345, 'icon' => 'fas fa-chart-pie', 'color' => 'success'],
-            ['title' => 'Orders', 'value' => 576, 'icon' => 'far fa-check-circle', 'color' => 'secondary'],
-        ];
+        $users = DB::table('users')->count(); // Data User
+    $teachers = DB::table('teacher')->count(); // Data Guru
+    $students = DB::table('students')->count(); // Data Siswa
+    $subjects = DB::table('mapel')->count(); // Data Mata Pelajaran
+
         
-        return view('backend.dashboard.index', compact('dashboards'));
+        return view('backend.dashboard.index', compact('users', 'teachers', 'students', 'subjects'));
     }
 
 

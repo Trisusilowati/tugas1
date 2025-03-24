@@ -42,15 +42,29 @@
                         @if($siswa->jurusan_ketiga) / {{ $siswa->jurusan_ketiga }} @endif
                     </td>
                 </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>
+                        <form action="{{ route('pendaftaran.update.status', $siswa->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="input-group">
+                                <select name="status" class="form-select">
+                                    <option value="Diterima" {{ $siswa->status == 'Diterima' ? 'selected' : '' }}>Diterima</option>
+                                    <option value="Ditolak" {{ $siswa->status == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                </select>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-check"></i> Simpan
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
-    
-    <button type="button" class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#confirmationModal">
-        <i class="fas fa-check"></i> Terima / Tolak
-    </button>
-    
-    <a href="{{ route('pendaftaran.export.pdf', $siswa->id) }}" class="btn btn-primary mt-3">
+
+    <a href="{{ route('pendaftaran.export.pdf', ['id' => $siswa->id]) }}" class="btn btn-primary mt-3">
         <i class="fas fa-file-pdf"></i> Export PDF
     </a>
     
@@ -58,4 +72,19 @@
         <i class="fas fa-arrow-left"></i> Kembali
     </a>
 </div>
+
+<!-- SweetAlert2 Script -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('success'))
+<script>
+    Swal.fire({
+        title: 'Berhasil!',
+        text: "{{ session('success') }}",
+        icon: 'success',
+        confirmButtonText: 'OK'
+    });
+</script>
+@endif
+
 @endsection

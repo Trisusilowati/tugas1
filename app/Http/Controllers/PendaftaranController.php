@@ -108,13 +108,27 @@ public function tolak($id)
 
     return redirect()->route('pendaftaran')->with('rejected', 'Siswa ditolak!');
 }
-public function exportPDF($id)
-    {
-        $pendaftaran = Student::findOrFail($id);
-        $pdf = Pdf::loadView('backend.pendaftaran.download', compact('pendaftaran'));
+public function exportPdf($id)
+{
+    $pendaftaran = Pendaftaran::find($id);
+    
+    if (!$pendaftaran) {
+        return abort(404, "Data tidak ditemukan");
+    }
 
-        return $pdf->download('data_pendaftaran.pdf');
+    $pdf = Pdf::loadView('backend.pendaftaran.download', compact('pendaftaran'));
+    return $pdf->download('pendaftaran_' . $pendaftaran->id . '.pdf');
 }
+
+public function updateStatus(Request $request, $id)
+{
+    $siswa = Pendaftaran::findOrFail($id);
+    $siswa->status = $request->status;
+    $siswa->save();
+
+    return redirect()->back()->with('success', 'Status berhasil diperbarui!');
+}
+
 }
 
 

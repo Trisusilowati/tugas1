@@ -13,103 +13,57 @@
     <!-- Card Section -->
     <h3 class="fw-bold mb-3 mt-4">Statistik</h3>
     <div class="row g-3">
+      @php
+      $stats = [
+      ['icon' => 'fas fa-users', 'label' => 'Total Users', 'count' => $users, 'color' => 'primary'],
+      ['icon' => 'fas fa-user-tie', 'label' => 'Total Guru', 'count' => $teachers, 'color' => 'info'],
+      ['icon' => 'fas fa-user-graduate', 'label' => 'Total Siswa', 'count' => $students, 'color' => 'success'],
+      ['icon' => 'fas fa-book-open', 'label' => 'Total Mata Pelajaran', 'count' => $subjects, 'color' => 'warning'],
+      ];
+  @endphp
+
+      @foreach ($stats as $stat)
       <div class="col-sm-6 col-md-3">
-      <div class="card card-stats card-primary card-round shadow-sm">
-        <div class="card-body">
-        <div class="row">
-          <div class="col-4">
-          <div class="icon-big text-center text-white">
-            <i class="fas fa-users fa-2x"></i>
-          </div>
-          </div>
-          <div class="col-8 col-stats">
-          <div class="numbers">
-            <p class="card-category">Visitors</p>
-            <h4 class="card-title">1,294</h4>
-          </div>
-          </div>
+      <div class="card card-stats card-{{ $stat['color'] }} card-round shadow-sm">
+      <div class="card-body">
+      <div class="row">
+        <div class="col-4">
+        <div class="icon-big text-center text-white">
+        <i class="{{ $stat['icon'] }} fa-2x"></i>
+        </div>
+        </div>
+        <div class="col-8 col-stats">
+        <div class="numbers">
+        <p class="card-category">{{ $stat['label'] }}</p>
+        <h4 class="card-title">{{ $stat['count'] }}</h4>
         </div>
         </div>
       </div>
       </div>
-      <div class="col-sm-6 col-md-3">
-      <div class="card card-stats card-info card-round shadow-sm">
-        <div class="card-body">
-        <div class="row">
-          <div class="col-4">
-          <div class="icon-big text-center text-white">
-            <i class="fas fa-user-check fa-2x"></i>
-          </div>
-          </div>
-          <div class="col-8 col-stats">
-          <div class="numbers">
-            <p class="card-category">Subscribers</p>
-            <h4 class="card-title">1,303</h4>
-          </div>
-          </div>
-        </div>
-        </div>
       </div>
       </div>
-      <div class="col-sm-6 col-md-3">
-      <div class="card card-stats card-success card-round shadow-sm">
-        <div class="card-body">
-        <div class="row">
-          <div class="col-4">
-          <div class="icon-big text-center text-white">
-            <i class="fas fa-chart-pie fa-2x"></i>
-          </div>
-          </div>
-          <div class="col-8 col-stats">
-          <div class="numbers">
-            <p class="card-category">Sales</p>
-            <h4 class="card-title">$ 1,345</h4>
-          </div>
-          </div>
-        </div>
-        </div>
-      </div>
-      </div>
-      <div class="col-sm-6 col-md-3">
-      <div class="card card-stats card-secondary card-round shadow-sm">
-        <div class="card-body">
-        <div class="row">
-          <div class="col-4">
-          <div class="icon-big text-center text-white">
-            <i class="far fa-check-circle fa-2x"></i>
-          </div>
-          </div>
-          <div class="col-8 col-stats">
-          <div class="numbers">
-            <p class="card-category">Order</p>
-            <h4 class="card-title">576</h4>
-          </div>
-          </div>
-        </div>
-        </div>
-      </div>
-      </div>
+    @endforeach
     </div>
 
-    <!-- Grafik Section -->
+
     <!-- Grafik Section -->
     <h3 class="fw-bold mb-3 mt-4">Grafik</h3>
     <div class="row ml-3"> <!-- Tambahkan margin kiri -->
-      <div class="col-md-5 d-flex justify-content-center">
+    <div class="col-md-5 d-flex justify-content-center">
       <canvas id="pieChart" style="max-width: 400px; max-height: 400px;"></canvas>
-      </div>
-      <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
       <canvas id="barChart" style="max-width: 600px; max-height: 400px;"></canvas>
       <p class="text-muted mt-2" style="font-size: 14px; text-align: left;">
-        <strong>Keterangan Nilai:</strong><br>
-        A: 80 - 100<br>
-        B: 70 - 79<br>
-        C: 60 - 69<br>
-        D: 50 - 59<br>
-        E: < 50 </p>
-      </div>
+      <strong>Keterangan Nilai:</strong><br>
+      A: 80 - 100<br>
+      B: 70 - 79<br>
+      C: 60 - 69<br>
+      D: 50 - 59<br>
+      E: < 50 </p>
     </div>
     </div>
+  </div>
   </div>
   @php
     $students = DB::table('students')->count();
@@ -123,7 +77,7 @@
     'D' => DB::table('nilai')->whereBetween('nilai', [50, 59])->count(),
     'E' => DB::table('nilai')->where('nilai', '<', 50)->count(),
     ];
-  @endphp
+@endphp
 @endsection
 
 @section('script')

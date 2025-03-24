@@ -24,7 +24,9 @@ Route::post('/pendaftaran/store', [PendaftaranController::class, 'store'])->name
 Route::middleware('auth', 'verified')->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index']) ->name('dashboard');
 
-
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('welcome');
 
     // Route::get('search', [SearchController::class, 'index'])->name('search');
 
@@ -90,10 +92,12 @@ Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('penda
 Route::get('/pendaftaran/edit/{id}', [PendaftaranController::class, 'edit'])->name('pendaftaran.edit');
 Route::put('/pendaftaran/update/{id}', [PendaftaranController::class, 'update'])->name('pendaftaran.update');
 Route::delete('/pendaftaran/delete/{id}', [PendaftaranController::class, 'destroy'])->name('pendaftaran.destroy');
-Route::get('/pendaftaran/exportpdf/{id}', [PendaftaranController::class, 'exportPDF'])->name('pendaftaran.export.pdf');
 Route::get('/pendaftaran/{id}', [PendaftaranController::class, 'show'])->name('pendaftaran.show');
 Route::post('/pendaftaran/{id}/terima', [PendaftaranController::class, 'terima'])->name('pendaftaran.terima');
 Route::post('/pendaftaran/{id}/tolak', [PendaftaranController::class, 'tolak'])->name('pendaftaran.tolak');
+Route::put('pendaftaran/update-status/{id}', [PendaftaranController::class, 'updateStatus'])->name('pendaftaran.update.status');
+Route::get('pendaftaran/exportpdf/{id?}', [PendaftaranController::class, 'exportPdf'])->name('pendaftaran.export.pdf');
+
 
 
 
